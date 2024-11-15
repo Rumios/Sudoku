@@ -1,0 +1,206 @@
+/* 전체 페이지의 가운데에 배치 */
+body, html {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #4CAF50; /* Same color as the Start button */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 컨테이너를 flex로 설정하여 보드와 숫자 그리드를 나란히 배치 */
+.container {
+    display: flex;
+    align-items: flex-start; /* 세로로 정렬 */
+    justify-content: center;
+}
+
+/* 9x9 그리드 컨테이너 스타일 */
+.grid-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(9, 50px); /* 9개의 열 */
+    grid-template-rows: repeat(9, 50px);    /* 9개의 행 */
+    gap: 5px;                              /* 셀 간격 */
+    margin-bottom: 20px;                    /* 그리드와 버튼 사이 여백 */
+}
+
+/* 각 그리드 항목 스타일 */
+.grid-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #ccc; /* 셀 경계 */
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+    background-color: #f9f9f9; /* 기본 배경 색상 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* 배경 색상과 transform 효과 */
+    cursor: pointer; /* 클릭 가능한 영역 */
+}
+
+/* 홀수 셀 배경색 */
+.grid-item:nth-child(odd) {
+    background-color: #e9ecef;
+}
+
+/* 짝수 셀 배경색 */
+.grid-item:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* 숫자 그리드 스타일 (세로로 배치) */
+.number-container {
+    display: grid;
+    grid-template-columns: repeat(1, 50px); 
+    grid-template-rows: repeat(9, 50px);    
+    gap: 5px;                              
+    margin-left: 20px;                      
+}
+
+/* 숫자 항목 스타일 */
+.number-item {
+    font-size: 22px;                         /* 글자 크기를 조금 키움 */
+    font-weight: bold;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #d3d3d3;               /* 숫자 그리드 배경 색상 */
+    border: 1px solid #bbb;                  /* 더 부드러운 경계선 색상 */
+    border-radius: 5px;                      /* 둥근 모서리 */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* 부드러운 효과 추가 */
+}
+
+/* 숫자 항목 hover 효과 */
+.number-item:hover {
+    background-color: #d4e9d2; /* 미세하게 다른 배경색 */
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6); /* 그림자 추가 */       /* hover 시 배경색 변경 */                          /* 숫자 색상 변경 */
+    cursor: pointer;                         /* 클릭 가능한 손 모양 커서 */
+    transform: scale(1.1);                    /* hover 시 크기 약간 확대 */
+}
+
+/* 숫자 칸 배경색 */
+.number-item {
+    background-color: #f9f9f9;
+}
+
+/* Start 버튼 스타일 */
+button#StartButton {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50; /* 초록색 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 60px;
+    margin-top: 10px;
+}
+
+button#RestartButton {
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #4CAF50; /* 초록색 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 60px;
+    margin-top: 10px;
+}
+
+
+/* 버튼 hover 효과 */
+button#StartButton:hover {
+    background-color: #45a049;
+}
+
+button#RestartButton:hover {
+    background-color: #45a049;
+}
+
+/* 클릭된 셀 스타일  */
+.grid-item.clicked {
+    background-color: #4CAF50; /* 클릭된 셀 배경색 */
+    color: white; /* 숫자 색상 변경 */
+}
+
+/* 호버 시 배경색 변화와 그림자 */
+.grid-item:hover {
+    background-color: #d4e9d2; /* 미세하게 다른 배경색 */
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6); /* 그림자 추가 */
+}
+
+/* 그리드 항목에 숫자가 들어간 경우 텍스트 스타일 */
+.grid-item.clicked span {
+    color: white; /* 클릭 시 숫자 색상 */
+}
+
+/* 각 하트 아이콘을 스타일링 */
+#heart1, #heart2, #heart3 {
+    font-size: 48px; /* 하트 크기 */
+    color: #ff0000; /* 하트 색상 */
+    margin-left: 10px; /* 버튼과 하트 사이 간격 */
+    display: inline-block; /* 텍스트가 버튼과 같은 라인에 오도록 설정 */
+    vertical-align: middle; /* 세로 정렬 */
+    transition: transform 0.3s ease; /* 하트 애니메이션 추가 */
+}
+
+/* 하트에 마우스를 올렸을 때 크기 변화 */
+#heart1:hover, #heart2:hover, #heart3:hover {
+    transform: scale(1.2); /* 크기 확대 */
+}
+
+/* 각 하트를 다르게 배치 */
+#heart1 {
+    margin-right: 10px; /* 첫 번째 하트 오른쪽 여백 */
+}
+
+#heart2 {
+    margin-right: 10px; /* 두 번째 하트 오른쪽 여백 */
+}
+
+.game-over-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    font-size: 24px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.game-success-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 255, 100, 0.8);
+    color: white;
+    font-size: 24px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
