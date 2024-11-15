@@ -1,4 +1,4 @@
-/* 전체 페이지의 가운데에 배치 */
+/* 전체 페이지 가운데에 배치 */
 body, html {
     height: 100%;
     display: flex;
@@ -9,31 +9,38 @@ body, html {
     flex-direction: column;
 }
 
+/* 제목 크기 증가 */
 .title {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: bold;
-    color: #4CAF50; /* Same color as the Start button */
+    color: #4CAF50;
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* 컨테이너를 flex로 설정하여 보드와 숫자 그리드를 나란히 배치 */
+/* 컨테이너 flex로 설정, 숫자 그리드 간격 확대 */
 .container {
     display: flex;
-    align-items: flex-start; /* 세로로 정렬 */
+    align-items: flex-start;
     justify-content: center;
+    max-width: 100vw;
+    padding: 20px;
+    gap: 40px; /* 보드와 숫자 그리드 사이 간격 확대 */
+}
+
+/* 보드와 숫자 그리드의 최대 너비를 고정하여 크기 제한 */
+.board-container {
+    max-width: 450px;
 }
 
 /* 9x9 그리드 컨테이너 스타일 */
 .grid-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
     display: grid;
-    grid-template-columns: repeat(9, 50px); /* 9개의 열 */
-    grid-template-rows: repeat(9, 50px);    /* 9개의 행 */
-    gap: 5px;                              /* 셀 간격 */
-    margin-bottom: 20px;                    /* 그리드와 버튼 사이 여백 */
+    grid-template-columns: repeat(9, 50px); /* 각 칸 크기 증가 */
+    grid-template-rows: repeat(9, 50px);
+    gap: 4px;
+    width: auto;
+    margin-bottom: 30px;
 }
 
 /* 각 그리드 항목 스타일 */
@@ -43,164 +50,148 @@ body, html {
     align-items: center;
     width: 50px;
     height: 50px;
-    border: 1px solid #ccc; /* 셀 경계 */
-    font-size: 20px;
+    border: 1px solid #ccc;
+    font-size: 18px;
     font-weight: bold;
-    text-align: center;
     color: #333;
-    background-color: #f9f9f9; /* 기본 배경 색상 */
-    transition: background-color 0.3s ease, transform 0.2s ease; /* 배경 색상과 transform 효과 */
-    cursor: pointer; /* 클릭 가능한 영역 */
+    background-color: #f9f9f9;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
 }
 
-/* 홀수 셀 배경색 */
 .grid-item:nth-child(odd) {
     background-color: #e9ecef;
 }
 
-/* 짝수 셀 배경색 */
 .grid-item:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* 숫자 그리드 스타일 (세로로 배치) */
+/* 숫자 그리드 (보드의 오른쪽에 세로 배열) */
 .number-container {
     display: grid;
-    grid-template-columns: repeat(1, 50px); 
-    grid-template-rows: repeat(9, 50px);    
-    gap: 5px;                              
-    margin-left: 20px;                      
+    grid-template-columns: repeat(1, 50px);
+    grid-template-rows: repeat(9, 50px);
+    gap: 4px;
+    margin-left: 30px;
+    align-self: flex-start;
 }
 
-/* 숫자 항목 스타일 */
 .number-item {
-    font-size: 22px;                         /* 글자 크기를 조금 키움 */
+    font-size: 18px;
     font-weight: bold;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #d3d3d3;               /* 숫자 그리드 배경 색상 */
-    border: 1px solid #bbb;                  /* 더 부드러운 경계선 색상 */
-    border-radius: 5px;                      /* 둥근 모서리 */
-    transition: background-color 0.3s ease, transform 0.3s ease; /* 부드러운 효과 추가 */
+    background-color: #d3d3d3;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-/* 숫자 항목 hover 효과 */
 .number-item:hover {
-    background-color: #d4e9d2; /* 미세하게 다른 배경색 */
-    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6); /* 그림자 추가 */       /* hover 시 배경색 변경 */                          /* 숫자 색상 변경 */
-    cursor: pointer;                         /* 클릭 가능한 손 모양 커서 */
-    transform: scale(1.1);                    /* hover 시 크기 약간 확대 */
+    background-color: #d4e9d2;
+    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6);
+    transform: scale(1.1);
+    cursor: pointer;
 }
 
-/* 숫자 칸 배경색 */
-.number-item {
-    background-color: #f9f9f9;
-}
-
-/* Start 버튼 스타일 */
-button#StartButton {
+/* Start와 Restart 버튼 스타일 */
+button#StartButton, button#RestartButton {
     padding: 15px 30px;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    background-color: #4CAF50; /* 초록색 */
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    height: 60px;
-    margin-top: 10px;
+    margin-top: 15px;
+    width: 150px;
 }
 
-button#RestartButton {
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #4CAF50; /* 초록색 */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    height: 60px;
-    margin-top: 10px;
-}
-
-
-/* 버튼 hover 효과 */
-button#StartButton:hover {
+button#StartButton:hover, button#RestartButton:hover {
     background-color: #45a049;
 }
 
-button#RestartButton:hover {
-    background-color: #45a049;
-}
-
-/* 클릭된 셀 스타일  */
-.grid-item.clicked {
-    background-color: #4CAF50; /* 클릭된 셀 배경색 */
-    color: white; /* 숫자 색상 변경 */
-}
-
-/* 호버 시 배경색 변화와 그림자 */
-.grid-item:hover {
-    background-color: #d4e9d2; /* 미세하게 다른 배경색 */
-    box-shadow: 0 0 10px rgba(0, 128, 0, 0.6); /* 그림자 추가 */
-}
-
-/* 그리드 항목에 숫자가 들어간 경우 텍스트 스타일 */
-.grid-item.clicked span {
-    color: white; /* 클릭 시 숫자 색상 */
-}
-
-/* 각 하트 아이콘을 스타일링 */
+/* 하트 아이콘 크기 확대 */
 #heart1, #heart2, #heart3 {
-    font-size: 48px; /* 하트 크기 */
-    color: #ff0000; /* 하트 색상 */
-    margin-left: 10px; /* 버튼과 하트 사이 간격 */
-    display: inline-block; /* 텍스트가 버튼과 같은 라인에 오도록 설정 */
-    vertical-align: middle; /* 세로 정렬 */
-    transition: transform 0.3s ease; /* 하트 애니메이션 추가 */
+    font-size: 28px;
+    color: #ff0000;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+    transition: transform 0.3s ease;
 }
 
-/* 하트에 마우스를 올렸을 때 크기 변화 */
-#heart1:hover, #heart2:hover, #heart3:hover {
-    transform: scale(1.2); /* 크기 확대 */
+@media (max-width: 480px) {
+    /* 작은 화면에서 크기를 줄여 균형 유지 */
+    .grid-container {
+        width: 270px;
+        gap: 3px;
+    }
+
+    .grid-item {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .number-container {
+        grid-template-columns: repeat(1, 30px);
+        grid-template-rows: repeat(9, 30px);
+        gap: 3px;
+    }
+
+    .number-item {
+        font-size: 14px;
+    }
+
+    button#StartButton, button#RestartButton {
+        font-size: 12px;
+        width: 100px;
+    }
+
+    #heart1, #heart2, #heart3 {
+        font-size: 20px;
+    }
 }
 
-/* 각 하트를 다르게 배치 */
-#heart1 {
-    margin-right: 10px; /* 첫 번째 하트 오른쪽 여백 */
-}
-
-#heart2 {
-    margin-right: 10px; /* 두 번째 하트 오른쪽 여백 */
-}
-
-.game-over-message {
+/* Success와 Game Over 메시지를 보드 중앙에 위치시키기 위한 스타일 */
+.game-over-message, .game-success-message {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(255, 0, 0, 0.8);
-    color: white;
-    font-size: 24px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    z-index: 1000;
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff0000;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 25px 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    text-align: center;
 }
 
 .game-success-message {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 255, 100, 0.8);
-    color: white;
-    font-size: 24px;
-    padding: 10px 20px;
-    border-radius: 5px;
-    z-index: 1000;
+    color: #4CAF50;
+}
+
+/* Heart icons and timer alignment */
+.status-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* Timer style */
+#timer {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    padding: 5px 100px;
 }
