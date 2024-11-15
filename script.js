@@ -56,6 +56,8 @@ let diag = Array.from({ length: 9 }, () => Array(10).fill(0));
 let end = false;
 let gameStarted = false;
 let selectedCell = null; // 마지막으로 선택한 칸을 추적
+let timerInterval;
+let seconds = 0;
 
 // 보드 생성
 function board_init() {
@@ -120,6 +122,16 @@ document.getElementById('StartButton').addEventListener('click', function () {
     document.getElementById('heart1').style.display = 'inline-block';
     document.getElementById('heart2').style.display = 'inline-block';
     document.getElementById('heart3').style.display = 'inline-block';
+    document.getElementById('timer').style.display = 'inline-block';
+
+    // 타이머 시작
+    timerInterval = setInterval(() => {
+        seconds++; // 초 증가
+        const minutes = Math.floor(seconds / 60); // 분 계산
+        const remainingSeconds = seconds % 60; // 남은 초 계산
+        // 분:초 형식으로 표시 (두 자리 숫자 형식으로)
+        document.getElementById('timer').innerText = `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+    }, 1000);
 
     const gridItems = document.querySelectorAll('.grid-item');
     gridItems.forEach((item) => {
@@ -200,6 +212,12 @@ document.getElementById('RestartButton').addEventListener('click', function () {
     document.getElementById('heart1').style.display = 'none';
     document.getElementById('heart2').style.display = 'none';
     document.getElementById('heart3').style.display = 'none';
+    document.getElementById('timer').style.display = 'none';
+
+    // 타이머 중지
+    clearInterval(timerInterval);
+    seconds = 0; // 타이머 초기화
+    document.getElementById('timer').innerText = '00:00'; // 타이머 초기값으로 리셋
 
     const gameOverMessage = document.querySelector('.game-over-message');
     if (gameOverMessage) {
@@ -211,6 +229,7 @@ function displayGameOverMessage() {
     const gameOverMessage = document.createElement('div');
     gameOverMessage.classList.add('game-over-message');
     gameOverMessage.innerText = 'Game Over!';
+    document.getElementById('timer').style.display = 'none';
 
     // 게임 오버 창을 body에 추가
     document.body.appendChild(gameOverMessage);
@@ -219,6 +238,25 @@ function displayGameOverMessage() {
     setTimeout(() => {
         gameOverMessage.remove();
     }, 3000);
+}
+
+function displaySuccessMessage() {
+    const existingMessage = document.querySelector('.game-success-message');
+    if (!existingMessage) {
+        const successMessage = document.createElement('div');
+        successMessage.classList.add('game-success-message');
+        successMessage.innerText = 'Success!';
+
+        // 성공 메시지를 body에 추가
+        document.body.appendChild(successMessage);
+
+        clearInterval(timerInterval);
+
+        // 메시지가 화면에 표시되면, 3초 후 자동으로 사라지게 설정
+        setTimeout(() => {
+            successMessage.remove();
+        }, 3000);
+    }
 }
 
 function checkIfBoardFilled() {
@@ -237,19 +275,3 @@ function checkIfBoardFilled() {
     }
 }
 
-function displaySuccessMessage() {
-    const existingMessage = document.querySelector('.game-success-message');
-    if (!existingMessage) {
-        const successMessage = document.createElement('div');
-        successMessage.classList.add('game-success-message');
-        successMessage.innerText = 'Success!';
-
-        // 성공 메시지를 body에 추가
-        document.body.appendChild(successMessage);
-
-        // 메시지가 화면에 표시되면, 3초 후 자동으로 사라지게 설정
-        setTimeout(() => {
-            successMessage.remove();
-        }, 3000);
-    }
-}
