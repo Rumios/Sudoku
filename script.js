@@ -178,13 +178,16 @@ document.querySelectorAll('.number-item').forEach((numberItem) => {
                     numberItem.style.backgroundColor = ''; // 원래 배경색으로 복구
                 }, 1000);
 
+                selectedCell.style.backgroundColor = '';
+                selectedCell = '';
+
                 let hearts = [document.getElementById('heart3'), document.getElementById('heart2'), document.getElementById('heart1')];
                 if (hearts[1].style.display == 'none'){
                         displayGameOverMessage();
                     }
                 for (let i = 0; i < hearts.length; i++) {
                     if (hearts[i].style.display !== 'none') {
-                        hearts[i].style.display = 'none'; // 첫 번째로 보이는 하트를 숨김
+                        hearts[i].style.display = 'none'; // 왼 -> 오로 숨김
                         break; // 하나만 숨기고 멈춤
                     }
                 }
@@ -226,36 +229,34 @@ document.getElementById('RestartButton').addEventListener('click', function () {
 });
 
 function displayGameOverMessage() {
-    const gameOverMessage = document.createElement('div');
-    gameOverMessage.classList.add('game-over-message');
-    gameOverMessage.innerText = 'Game Over!';
-    document.getElementById('timer').style.display = 'none';
+    const modal = document.getElementById('end-modal');
+    const modalMessage = document.getElementById('modal-message');
+    const modalTime = document.getElementById('modal-time')
 
-    // 게임 오버 창을 body에 추가
-    document.body.appendChild(gameOverMessage);
+    if (modal.style.display !== 'flex') {
+        modalMessage.innerText = 'Game Over!'; // 메시지 설정
+        modalMessage.style.color = '#FF0000';
+        modalTime.style.display = 'none';
+        modal.style.display = 'flex'; // 모달 표시
+        gameStarted = false;
 
-    // 메시지가 화면에 표시되면, 3초 후 자동으로 사라지게 설정
-    setTimeout(() => {
-        gameOverMessage.remove();
-    }, 3000);
+        clearInterval(timerInterval); // 타이머 멈추기
+    }
 }
 
 function displaySuccessMessage() {
-    const existingMessage = document.querySelector('.game-success-message');
-    if (!existingMessage) {
-        const successMessage = document.createElement('div');
-        successMessage.classList.add('game-success-message');
-        successMessage.innerText = 'Success!';
+    const modal = document.getElementById('end-modal');
+    const modalMessage = document.getElementById('modal-message');
+    const modalTime = document.getElementById('modal-time')
 
-        // 성공 메시지를 body에 추가
-        document.body.appendChild(successMessage);
+    if (modal.style.display !== 'flex') {
+        modalMessage.innerText = 'Success!'; // 메시지 설정
+        modalMessage.style.color = '#28a745';
+        modalTime.innerText = `Your Record is ${document.getElementById('timer').innerText}`
+        modal.style.display = 'flex'; // 모달 표시
+        gameStarted = false;
 
-        clearInterval(timerInterval);
-
-        // 메시지가 화면에 표시되면, 3초 후 자동으로 사라지게 설정
-        setTimeout(() => {
-            successMessage.remove();
-        }, 3000);
+        clearInterval(timerInterval); // 타이머 멈추기
     }
 }
 
@@ -274,4 +275,10 @@ function checkIfBoardFilled() {
         displaySuccessMessage();
     }
 }
+
+// 모달을 닫는 함수
+document.getElementById('closeBtn').addEventListener('click', function () {
+    const modal = document.getElementById('end-modal');
+    modal.style.display = 'none'; // 모달 창 숨기기
+});
 
